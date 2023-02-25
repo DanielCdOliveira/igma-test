@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import { CreateUserData } from "../interfaces/prismaInterfaces.js";
 import CpfServices from "../services/cpfServices.js";
 import UsersServices from "../services/userServices.js";
 
 interface Query {
   cpf: string;
+  page: string;
 }
 
 class UsersController {
@@ -37,8 +37,10 @@ class UsersController {
     res.status(200).send(user);
   }
 
-  getAllUsers(req: Request, res: Response) {
-    res.send("Hello World!");
+  public async getAllUsers(req: Request, res: Response) {
+    const { page } = req.query as unknown as Query;
+    const users = await this.usersService.getAllUsers(page);
+    res.status(200).send(users);
   }
 }
 

@@ -10,5 +10,7 @@ usersRoutes.post(
   (req, res) => new UsersController().signup(req, res)
 );
 usersRoutes.get("/", (req, res) => new UsersController().getUser(req, res));
-usersRoutes.get("/", (req, res) => new UsersController().getAllUsers(req, res));
+usersRoutes.get("/all", (req, res) =>
+  new UsersController().getAllUsers(req, res)
+);
 export default usersRoutes;

@@ -18,5 +18,9 @@ class UsersServices {
   public async getUserByCpf(cpf: string) {
     return await this.userRepository.getUserByCpf(cpf);
   }
+  public async getAllUsers(page: string) {
+    const pageInt = parseInt(page);
+    return this.userRepository.getAllUsers(pageInt);
+  }
 }
 export default UsersServices;
