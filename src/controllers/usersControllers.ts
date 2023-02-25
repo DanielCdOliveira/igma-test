@@ -15,6 +15,7 @@ class UsersController {
 
   public async signup(req: Request, res: Response) {
     const { body } = req;
+    await this.cpfService.cpfValidInsertDb(body.cpf);
     await this.usersService.createUser(body);
     res.sendStatus(201);
   }

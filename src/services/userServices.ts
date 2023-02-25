@@ -20,6 +20,12 @@ class UsersServices {
   }
   public async getAllUsers(page: string) {
     const pageInt = parseInt(page);
+    if (Number.isNaN(pageInt)) {
+      throw {
+        type: "unprocessable",
+        message: "query parameter page is invalid",
+      };
+    }
     return this.userRepository.getAllUsers(pageInt);
   }
 }
