@@ -2,3 +2,7 @@
 
 # Environment
 .env
+
+# tests
+.env.test
+/coverage
