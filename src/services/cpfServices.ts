@@ -9,14 +9,12 @@ export default class CpfServices {
   }
 
   public async cpfValidInsertDb(cpf: string) {
-    console.log(cpf);
-    console.log(this.cpfRegex.test(cpf));
-
     if (!this.cpfRegex.test(cpf)) {
       this.createError();
     }
     const cpfNumber = this.cpfStringToArrayInt(cpf);
     this.cpfValidDigits(cpfNumber);
+    return this.formatCpfForDatabase(cpf);
   }
 
   public cpfStringToArrayInt(cpf: string) {
@@ -68,5 +66,17 @@ export default class CpfServices {
       this.createError();
     }
   }
-  public formatCpfForDatabase() {}
+  public formatCpfForDatabase(cpf: string) {
+    if (cpf.length === 14) return cpf;
+    else
+      return [
+        cpf.slice(0, 3),
+        ".",
+        cpf.slice(3, 6),
+        ".",
+        cpf.slice(6, 9),
+        "-",
+        cpf.slice(9, 11),
+      ].join("");
+  }
 }
