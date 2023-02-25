@@ -3,9 +3,6 @@ export default class ErrorHandler {
 
   public returnError(error: any) {
     console.log(error);
-
-    if (error.type === "unauthorized")
-      return this.res.status(401).send(error.message);
     if (error.type === "not_found")
       return this.res.status(404).send(error.message);
     if (error.type === "conflict")
