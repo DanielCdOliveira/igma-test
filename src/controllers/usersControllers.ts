@@ -15,7 +15,7 @@ class UsersController {
 
   public async signup(req: Request, res: Response) {
     const { body } = req;
-    const newCpf = await this.cpfService.cpfValidInsertDb(body.cpf);
+    const newCpf = await this.cpfService.cpfValid(body.cpf);
     body.cpf = newCpf;
     await this.usersService.createUser(body);
     res.sendStatus(201);
@@ -29,7 +29,7 @@ class UsersController {
         message: "empty cpf query",
       };
     }
-    const newCpf = await this.cpfService.cpfValidInsertDb(cpf);
+    const newCpf = await this.cpfService.cpfValid(cpf);
     const user = await this.usersService.getUserByCpf(newCpf);
     if (!user) {
       throw {

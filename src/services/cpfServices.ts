@@ -8,7 +8,7 @@ export default class CpfServices {
     };
   }
 
-  public async cpfValidInsertDb(cpf: string) {
+  public async cpfValid(cpf: string) {
     if (!this.cpfRegex.test(cpf)) {
       this.createError();
     }
@@ -17,7 +17,7 @@ export default class CpfServices {
     return this.formatCpfForDatabase(cpf);
   }
 
-  public cpfStringToArrayInt(cpf: string) {
+  private cpfStringToArrayInt(cpf: string) {
     if (cpf.length === 14) {
       cpf = cpf.replace(/\./g, "").replace(/\-/g, "");
     }
@@ -26,47 +26,30 @@ export default class CpfServices {
     });
   }
 
-  public cpfValidDigits(cpf: number[]) {
+  private cpfValidDigits(cpf: number[]) {
     const cpfDigits = cpf.splice(9, 2);
-    const arrayMultiplied = cpf.map((cpfDigit, index) => {
-      return cpfDigit * this.digitValidArray[index + 1];
+    this.validEachDigit(cpf, cpfDigits[0], 0);
+    cpf.push(cpfDigits[0]);
+    this.validEachDigit(cpf, cpfDigits[1], 1);
+  }
+
+  private validEachDigit(cpf: number[], cpfDigit: number, indexDigit: number) {
+    const arrayMultiplied = cpf.map((digit, index) => {
+      return digit * this.digitValidArray[index + (indexDigit === 0 ? 1 : 0)];
     });
     let sumArrayMultiplied = arrayMultiplied.reduce((sum, element) => {
       return sum + element;
     });
     const rest = sumArrayMultiplied % 11;
-    console.log(rest);
-    console.log(11 - rest);
-    console.log(cpfDigits[0]);
-
-    console.log(11 - rest !== cpfDigits[0]);
     if (rest < 2) {
-      if (cpfDigits[0] !== 0) {
+      if (cpfDigit !== 0) {
         this.createError();
       }
-    } else if (11 - rest !== cpfDigits[0]) {
-      this.createError();
-    }
-    cpf.push(cpfDigits[0]);
-    const arrayFirstDigitMultiplied = cpf.map((cpfDigit, index) => {
-      return cpfDigit * this.digitValidArray[index];
-    });
-    const sumArrayFirstDigitMultiplied = arrayFirstDigitMultiplied.reduce(
-      (sum, element) => {
-        return sum + element;
-      }
-    );
-    console.log(sumArrayFirstDigitMultiplied);
-    const restSecondDigit = sumArrayFirstDigitMultiplied % 11;
-    if (restSecondDigit < 2) {
-      if (cpfDigits[1] !== 0) {
-        this.createError();
-      }
-    } else if (11 - restSecondDigit !== cpfDigits[1]) {
+    } else if (11 - rest !== cpfDigit) {
       this.createError();
     }
   }
-  public formatCpfForDatabase(cpf: string) {
+  private formatCpfForDatabase(cpf: string) {
     if (cpf.length === 14) return cpf;
     else
       return [

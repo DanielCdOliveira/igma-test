@@ -8,10 +8,9 @@
     "dev": "nodemon src/server.ts",
     "build": "tsc src/server.ts",
     "start": "node dist/server.js",
-    "dev:test": "dotenv -e .env.test nodemon src/server.ts",
     "prisma": "prisma migrate dev",
-    "test": "dotenv -e .env.test prisma migrate dev && dotenv -e .env.test jest -- -i --coverage",
-    "test:unit": "dotenv -e .env.test prisma migrate dev && dotenv -e .env.test jest unitTests.test -- -i --coverage"
+    "test": "cross-env dotenv -e .env.test prisma migrate dev && dotenv -e .env.test jest -- -i --coverage",
+    "test:unit": "cross-env dotenv -e .env.test prisma migrate dev && dotenv -e .env.test jest unitTest.test -- -i --coverage"
   },
   "keywords": [],
   "author": "",

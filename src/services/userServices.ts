@@ -1,3 +1,4 @@
+import { Users } from "@prisma/client";
 import { CreateUserData } from "../interfaces/prismaInterfaces.js";
 import UsersRepositories from "../repositories/usersRepositories.js";
 
@@ -15,10 +16,10 @@ class UsersServices {
     this.userRepository.createUser(newUser);
   }
 
-  public async getUserByCpf(cpf: string) {
+  public async getUserByCpf(cpf: string): Promise<Users> {
     return await this.userRepository.getUserByCpf(cpf);
   }
-  public async getAllUsers(page: string) {
+  public async getAllUsers(page: string): Promise<Users[]> {
     const pageInt = parseInt(page);
     if (Number.isNaN(pageInt)) {
       throw {
@@ -26,7 +27,8 @@ class UsersServices {
         message: "query parameter page is invalid",
       };
     }
-    return this.userRepository.getAllUsers(pageInt);
+
+    return await this.userRepository.getAllUsers(pageInt);
   }
 }
 export default UsersServices;
