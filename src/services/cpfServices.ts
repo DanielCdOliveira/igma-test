@@ -4,7 +4,7 @@ export default class CpfServices {
   private createError() {
     throw {
       type: "unprocessable",
-      message: "inavalid cpf",
+      message: "invalid cpf",
     };
   }
 
