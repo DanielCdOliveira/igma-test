@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres
+    container_name: db
+    restart: always
+    ports:
+      - 3456:5432
+    env_file:
+      - .env.docker
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:${POSTGRES_PORT}/${POSTGRES_DATABASE}?schema=public
+    volumes:
+      - postgres:/var/lib/posgresql/data
+
+  igma-api:
+    container_name: igma-api
+    build: .
+    ports:
+      - 5000:5000
+    depends_on:
+      - db
+    env_file:
+      - .env.docker
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:${POSTGRES_PORT}/${POSTGRES_DATABASE}?schema=public
+
+volumes:
+  postgres:

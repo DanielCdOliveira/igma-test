@@ -6,11 +6,13 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/server.ts",
-    "build": "tsc src/server.ts",
-    "start": "node dist/server.js",
+    "build": "tsc && prisma migrate dev",
+    "start": "node dist/src/server.js",
     "prisma": "prisma migrate dev",
-    "test": "cross-env dotenv -e .env.test prisma migrate dev && dotenv -e .env.test jest -- -i --coverage",
-    "test:unit": "cross-env dotenv -e .env.test prisma migrate dev && dotenv -e .env.test jest unitTest.test -- -i --coverage"
+    "test": "cross-env dotenv -e .env.test prisma migrate dev && cross-env dotenv -e .env.test jest -- -i --coverage",
+    "test:unit": "cross-env dotenv -e .env.test prisma migrate dev && cross-env dotenv -e .env.test jest unitTest.test -- -i --coverage",
+    "docker": "docker-compose --env-file .env.docker up --build",
+    "docker:start": "npm run build && node dist/src/server.js"
   },
   "keywords": [],
   "author": "",
@@ -25,7 +27,6 @@
     "dotenv-cli": "^5.1.0",
     "nodemon": "^2.0.12",
     "prisma": "^4.10.1",
-    "ts-jest": "^28.0.0",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.4"
   },
@@ -37,6 +38,7 @@
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "joi": "^17.6.0",
-    "supertest": "^6.3.3"
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.0.5"
   }
 }
