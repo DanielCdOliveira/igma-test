@@ -1,8 +1,11 @@
 /node_modules
-
+/dist
 # Environment
 .env
 
 # tests
 .env.test
 /coverage
+
+#docker
+.env.docker

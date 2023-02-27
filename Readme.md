@@ -92,9 +92,11 @@ GET /users/users/all?page=<page_number>
 
 ## 🏁 Running the application
 
-### Make sure you have the latest stable version of [Node.js](https://nodejs.org/en/download/) and [npm](https://www.npmjs.com/) running locally.
+- ### Make sure you have the latest stable version of [Node.js](https://nodejs.org/en/download/) and [npm](https://www.npmjs.com/) running locally.
 
-### Configure .env like the examples in code
+- ### Configure .env like the examples in code
+
+- ### Remember to use different database for each mode (.env)
 
 <br>
 
